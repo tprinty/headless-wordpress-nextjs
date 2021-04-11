@@ -1,11 +1,14 @@
 import {isEmpty} from 'lodash';
 import Link from "next/link";
+import {useState} from 'react';
 
 const Nav = ({headerMenus}) => {
 
     if( isEmpty(headerMenus)){
         return null;
     }
+
+    const[ isMenuVisible, setMenuVisibility ] = useState(false);
 
     console.warn('inside nav yo', headerMenus);
 
@@ -16,6 +19,7 @@ const Nav = ({headerMenus}) => {
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
 
                         <button type="button"
+                                onClick={() => setMenuVisibility(! isMenuVisible)}
                                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                                 aria-controls="mobile-menu" aria-expanded="false">
                             <span className="sr-only">Open main menu</span>
@@ -85,16 +89,16 @@ const Nav = ({headerMenus}) => {
                 </div>
             </div>
 
-            <div className="sm:hidden" id="mobile-menu">
+            <div className={`${ isMenuVisible ? 'max-h-full' : 'h-0'} overflow-hidden`} id="mobile-menu">
                 <div className="px-2 pt-2 pb-3 space-y-1">
-                    <a href="#"
-                       className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
-                    <a href="#"
-                       className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Team</a>
-                    <a href="#"
-                       className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
-                    <a href="#"
-                       className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
+
+                    {headerMenus?.map(menu => (
+                        <Link key={menu?.node?.id} href={menu?.node?.path} >
+                            <a class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{menu?.node?.label}</a>
+                        </Link>
+                    ))}
+
+
                 </div>
             </div>
         </nav>
