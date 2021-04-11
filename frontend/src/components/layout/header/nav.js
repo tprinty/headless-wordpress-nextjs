@@ -2,7 +2,7 @@ import {isEmpty} from 'lodash';
 import Link from "next/link";
 import {useState} from 'react';
 
-const Nav = ({headerMenus}) => {
+const Nav = ({header, headerMenus}) => {
 
     if( isEmpty(headerMenus)){
         return null;
@@ -39,11 +39,12 @@ const Nav = ({headerMenus}) => {
                     </div>
                     <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                         <div className="flex-shrink-0 flex items-center">
-                            <img className="block lg:hidden h-8 w-auto"
-                                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow"/>
-                                <img className="hidden lg:block h-8 w-auto"
-                                     src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                                     alt="Workflow"/>
+                            <img className="block lg:hidden h-8 w-auto mr-4" src={header?.siteLogoUrl}/>
+                            <img className="hidden lg:block h-8 w-auto mr-4" src={header?.siteLogoUrl} alt={header?.siteTitle}/>
+                            <div className="flex flex-col items-start justify-start">
+                                <span className="hidden lg:block w-auto font-semibold text-white">{header?.siteTitle}</span>
+                                <span className="hidden lg:block w-auto text-white">{header?.siteTagLine}</span>
+                            </div>
                         </div>
                         <div className="hidden sm:block sm:ml-6">
                             {headerMenus?.length ? (

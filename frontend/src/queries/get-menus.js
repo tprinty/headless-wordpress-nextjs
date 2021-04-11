@@ -1,8 +1,12 @@
 import { gql }from "@apollo/client";
 import MenuFragment from "./fragments/menus";
 
-export const GET_MENUS = gql `
-query MyQuery {
+const HeaderFooterQuery = `header: getHeader {
+    favicon
+    siteLogoUrl
+    siteTagLine
+    siteTitle
+  }
   headerMenus: menuItems(where: {location: HCMS_MENU_HEADER, parentId: "0"}) {
     edges {
       node {
@@ -24,6 +28,14 @@ query MyQuery {
       }
     }
   }
+  footer: getFooter {
+    copyrightText
+    sidebarOne
+  }`
+
+export const GET_MENUS = gql `
+query GET_MENUS {
+  ${HeaderFooterQuery}
 }
 ${MenuFragment}
 `
